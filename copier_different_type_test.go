@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jinzhu/copier"
+	"github.com/cogentcore/copier"
 )
 
 type TypeStruct1 struct {
