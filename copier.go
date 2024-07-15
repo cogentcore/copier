@@ -379,42 +379,42 @@ func copier(toValue interface{}, fromValue interface{}, opt Option) (err error) 
 							}
 						}
 					} else {
-						// try to set to method
-						var toMethod reflect.Value
-						if dest.CanAddr() {
-							toMethod = dest.Addr().MethodByName(destFieldName)
-						} else {
-							toMethod = dest.MethodByName(destFieldName)
-						}
+						// // try to set to method
+						// var toMethod reflect.Value
+						// if dest.CanAddr() {
+						// 	toMethod = dest.Addr().MethodByName(destFieldName)
+						// } else {
+						// 	toMethod = dest.MethodByName(destFieldName)
+						// }
 
-						if toMethod.IsValid() && toMethod.Type().NumIn() == 1 && fromField.Type().AssignableTo(toMethod.Type().In(0)) {
-							toMethod.Call([]reflect.Value{fromField})
-						}
+						// if toMethod.IsValid() && toMethod.Type().NumIn() == 1 && fromField.Type().AssignableTo(toMethod.Type().In(0)) {
+						// 	toMethod.Call([]reflect.Value{fromField})
+						// }
 					}
 				}
 			}
 
 			// Copy from from method to dest field
-			for _, field := range deepFields(toType) {
-				name := field.Name
-				srcFieldName, destFieldName := getFieldName(name, flgs, getFieldNamesMapping(mappings, fromType, toType))
+			// for _, field := range deepFields(toType) {
+			// name := field.Name
+			// srcFieldName, destFieldName := getFieldName(name, flgs, getFieldNamesMapping(mappings, fromType, toType))
 
-				var fromMethod reflect.Value
-				if source.CanAddr() {
-					fromMethod = source.Addr().MethodByName(srcFieldName)
-				} else {
-					fromMethod = source.MethodByName(srcFieldName)
-				}
+			// var fromMethod reflect.Value
+			// if source.CanAddr() {
+			// 	fromMethod = source.Addr().MethodByName(srcFieldName)
+			// } else {
+			// 	fromMethod = source.MethodByName(srcFieldName)
+			// }
 
-				if fromMethod.IsValid() && fromMethod.Type().NumIn() == 0 && fromMethod.Type().NumOut() == 1 && !shouldIgnore(fromMethod, opt.IgnoreEmpty) {
-					if toField := fieldByName(dest, destFieldName, opt.CaseSensitive); toField.IsValid() && toField.CanSet() {
-						values := fromMethod.Call([]reflect.Value{})
-						if len(values) >= 1 {
-							set(toField, values[0], opt.DeepCopy, converters)
-						}
-					}
-				}
-			}
+			// if fromMethod.IsValid() && fromMethod.Type().NumIn() == 0 && fromMethod.Type().NumOut() == 1 && !shouldIgnore(fromMethod, opt.IgnoreEmpty) {
+			// 	if toField := fieldByName(dest, destFieldName, opt.CaseSensitive); toField.IsValid() && toField.CanSet() {
+			// 		values := fromMethod.Call([]reflect.Value{})
+			// 		if len(values) >= 1 {
+			// 			set(toField, values[0], opt.DeepCopy, converters)
+			// 		}
+			// 	}
+			// }
+			// }
 		}
 
 		if isSlice && to.Kind() == reflect.Slice {
